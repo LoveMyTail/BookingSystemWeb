@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserDao">
+
+    <select id="queryUser" resultType="com.example.demo.entity.User">
+        SELECT user_id,nickname,gender,country,province,city,email,phone_number,age,hobby,introduction,address
+        FROM userinfo
+        ORDER BY user_id
+        ASC
+    </select>
+
+    <select id="queryUserById" resultType="com.example.demo.entity.User">
+        SELECT user_id,nickname,gender,country,province,city,email,phone_number,age,hobby,introduction,address
+        FROM userinfo
+        WHERE
+        user_id=#{user_id}
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId"
+            keyColumn="user_id" parameterType="com.example.demo.entity.User">
+        INSERT INTO
+        userinfo(user_id,nickname,gender,country,province,city,email,phone_number,age,hobby,introduction,address)
+        VALUES
+        (#{userId},#{nickname},#{gender},#{country},#{province},#{city},#{email},#{phoneNumber},#{age},#{hobby},#{introduction},#{address})
+    </insert>
+
+    <update id="updateUser" parameterType="com.example.demo.entity.User">
+        UPDATE userinfo
+        <set>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="gender!=null">gender=#{gender},</if>
+            <if test="country!=null">country=#{country},</if>
+            <if test="province!=null">province=#{province},</if>
+            <if test="city!=null">city=#{city},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="phoneNumber!=null">phone_number=#{phoneNumber},</if>
+            <if test="age!=null">age=#{age},</if>
+            <if test="hobby!=null">hobby=#{hobby},</if>
+            <if test="introduction!=null">introduction=#{introduction},</if>
+            <if test="address!=null">address=#{address},</if>
+        </set>
+        WHERE
+        user_id=#{userId}
+    </update>
+
+    <delete id="deleteUser">
+        DELETE FROM userinfo
+        WHERE user_id=#{userId}
+    </delete>
+
+</mapper>

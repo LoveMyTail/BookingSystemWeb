@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.OrderDao">
+    
+    <select id="queryOrder" resultType="com.example.demo.entity.Order">
+        SELECT *
+        FROM orderinfo
+        ORDER BY show_id
+        ASC
+    </select>
+
+    <select id="queryOrderByShowId" resultType="com.example.demo.entity.Order">
+        SELECT *
+        FROM orderinfo
+        WHERE show_id=#{showId}
+    </select>
+
+    <select id="queryOrderByUserId" resultType="com.example.demo.entity.Order">
+        SELECT *
+        FROM orderinfo
+        WHERE user_id=#{userId}
+    </select>
+
+    <select id="queryOrderById" resultType="com.example.demo.entity.Order">
+        SELECT *
+        FROM orderinfo
+        WHERE order_id=#{orderId}
+    </select>
+
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderId"
+            keyColumn="order_id" parameterType="com.example.demo.entity.Order">
+        INSERT INTO
+        orderinfo(order_id,user_id,show_id,seat_id,seat_info)
+        VALUES
+        (#{orderId},#{userId},#{showId},#{seatId},#{seatInfo})
+    </insert>
+
+    <delete id="deleteOrder">
+        DELETE FROM orderinfo
+        WHERE order_id=#{orderId}
+    </delete>
+
+</mapper>

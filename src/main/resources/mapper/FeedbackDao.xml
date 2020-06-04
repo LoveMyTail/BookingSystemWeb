@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.FeedbackDao">
+
+    <select id="queryFeedback" resultType="com.example.demo.entity.Feedback">
+        SELECT feedback_id,user_id,feedback_type,feedback
+        FROM feedbackinfo
+        ORDER BY feedback_id
+        ASC
+    </select>
+
+    <select id="queryFeedbackByUserId" resultType="com.example.demo.entity.Feedback">
+        SELECT feedback_id,user_id,feedback_type,feedback
+        FROM feedbackinfo
+        WHERE user_id=#{userId}
+    </select>
+    
+    <insert id="insertFeedback" useGeneratedKeys="true" keyProperty="feedbackId"
+            keyColumn="feedback_id" parameterType="com.example.demo.entity.Feedback">
+        INSERT INTO
+        feedbackinfo(feedback_id,user_id,feedback_type,feedback)
+        VALUES
+        (#{feedbackId},#{userId},#{feedbackType},#{feedback})
+    </insert>
+
+    <delete id="deleteFeedback">
+        DELETE FROM feedbackinfo
+        WHERE feedback_id=#{feedbackId}
+    </delete>
+
+</mapper>

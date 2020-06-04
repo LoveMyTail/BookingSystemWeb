@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.CommentDao">
+
+    <select id="queryComment" resultType="com.example.demo.entity.Comment">
+        SELECT comment_id,show_id,user_id,comment
+        FROM commentinfo
+        ORDER BY show_id
+        ASC
+    </select>
+
+    <select id="queryCommentByShowId" resultType="com.example.demo.entity.Comment">
+        SELECT comment_id,show_id,user_id,comment
+        FROM commentinfo
+        WHERE show_id=#{showId}
+    </select>
+
+    <select id="queryCommentByUserId" resultType="com.example.demo.entity.Comment">
+        SELECT comment_id,show_id,user_id,comment
+        FROM commentinfo
+        WHERE user_id=#{userId}
+    </select>
+
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="commentId"
+            keyColumn="comment_id" parameterType="com.example.demo.entity.Comment">
+        INSERT INTO
+        commentinfo(comment_id,show_id,user_id,comment)
+        VALUES
+        (#{commentId},#{showId},#{userId},#{comment})
+    </insert>
+
+    <delete id="deleteComment">
+        DELETE FROM commentinfo
+        WHERE comment_id=#{commentId}
+    </delete>
+
+</mapper>

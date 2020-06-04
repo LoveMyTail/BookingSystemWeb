@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.SeatDao">
+
+    <select id="querySeatById" resultType="com.example.demo.entity.Seat">
+        SELECT *
+        FROM seatinfo
+        WHERE show_id=#{showId}
+    </select>
+
+    <select id="querySeatIdByCoordinate" resultType="com.example.demo.entity.Seat">
+        SELECT *
+        FROM seatinfo
+        WHERE coordinate_x=#{coordinateX} AND coordinate_y=#{coordinateY} AND show_id=#{showId}
+    </select>
+
+    <insert id="insertSeat" useGeneratedKeys="true" keyProperty="seatId" keyColumn="seat_id"
+            parameterType="com.example.demo.entity.Seat">
+        INSERT INTO
+        seatinfo(seat_id,show_id,coordinate_x,coordinate_y,choosen,status)
+        VALUES
+        (#{seatId},#{showId},#{coordinateX},#{coordinateY},#{choosen},#{status})
+    </insert>
+
+    <update id="updateSeat" parameterType="com.example.demo.entity.Seat">
+        UPDATE seatinfo
+        <set>
+            <if test="choosen!=null">choosen=#{choosen},</if>
+        </set>
+        WHERE seat_id=#{seatId}
+    </update>
+
+    <delete id="deleteSeat">
+        DELETE FROM seatinfo
+        WHERE seat_id=#{seatId}
+    </delete>
+
+</mapper>

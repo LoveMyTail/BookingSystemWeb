@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.ShowDao">
+    <select id="queryShow" resultType="com.example.demo.entity.Show">
+        SELECT show_id,show_name,show_type,show_site,show_time,show_introduction,total,for_sell,price,img_url
+        FROM showinfo
+        ORDER BY show_id
+        ASC
+    </select>
+
+    <select id="queryShowByName" resultType="com.example.demo.entity.Show">
+        SELECT show_id,show_name,show_type,show_site,show_time,show_introduction,total,for_sell,price,img_url
+        FROM showinfo
+        WHERE
+        show_name LIKE CONCAT("%",#{show_name},"%")
+    </select>
+
+    <select id="queryShowByType" resultType="com.example.demo.entity.Show">
+        SELECT show_id,show_name,show_type,show_site,show_time,show_introduction,total,for_sell,price,img_url
+        FROM showinfo
+        WHERE
+        show_type=#{showType}
+    </select>
+
+    <select id="queryShowBySite" resultType="com.example.demo.entity.Show">
+        SELECT show_id,show_name,show_type,show_site,show_time,show_introduction,total,for_sell,price,img_url
+        FROM showinfo
+        WHERE
+        show_site=#{showSite}
+    </select>
+
+    <insert id="insertShow" useGeneratedKeys="true" keyProperty="showId"
+            keyColumn="show_id" parameterType="com.example.demo.entity.Show">
+        INSERT INTO
+        showinfo(show_id,show_name,show_type,show_site,show_time,show_introduction,total,for_sell,price,img_url)
+        VALUES
+        (#{showId},#{showName},#{showType},#{showSite},#{showTime},#{showIntroduction},#{total},#{forSell},#{price},#{imgUrl})
+    </insert>
+
+    <update id="updateShow" parameterType="com.example.demo.entity.Show">
+        UPDATE showinfo
+        <set>
+            <if test="showName!=null">show_name=#{showName},</if>
+            <if test="showType!=null">show_type=#{showType},</if>
+            <if test="showSite!=null">show_site=#{showSite},</if>
+            <if test="showTime!=null">show_time=#{showTime},</if>
+            <if test="showIntroduction!=null">show_introduction=#{showIntroduction},</if>
+            <if test="total!=null">total=#{total},</if>
+            <if test="forSell!=null">for_sell=#{forSell},</if>
+            <if test="price!=null">price=#{price},</if>
+        </set>
+        WHERE show_id=#{showId}
+    </update>
+
+    <delete id="deleteShow">
+        DELETE FROM showinfo
+        WHERE show_id=#{showId}
+    </delete>
+
+</mapper>
